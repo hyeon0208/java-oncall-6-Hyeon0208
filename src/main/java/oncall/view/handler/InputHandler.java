@@ -22,6 +22,7 @@ public class InputHandler {
     public String receiveValidatedWeekendEmployeeNames() {
         return receiveValidatedInput(inputView::inputWeekendEmployeeNames);
     }
+
     private <T> T receiveValidatedInput(Supplier<T> inputView) {
         while (true) {
             try {

@@ -54,6 +54,7 @@ public class Employees {
         weekendIndex = (weekendIndex + 1) % weekend.size();
         return name;
     }
+
     private void swapWeekdayEmployee(int index1, int index2) {
         Collections.swap(weekday, index1, index2);
     }

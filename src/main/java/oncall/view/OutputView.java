@@ -20,10 +20,10 @@ public class OutputView {
     public void printWorkSchedule(WorkDay workDay, Employees employees) {
         for (int i = 0; i < employees.getEmployeeCount(); i++) {
             if (workDay.isWeekend()) {
-                printScheduleFormat(workDay ,employees.getWeekendEmployeeNameBy());
+                printScheduleFormat(workDay, employees.getWeekendEmployeeNameBy());
             }
             if (workDay.isWeekDay()) {
-                printScheduleFormat(workDay ,employees.getWeekdayEmployeeNameBy());
+                printScheduleFormat(workDay, employees.getWeekdayEmployeeNameBy());
             }
             if (workDay.isHoliday()) {
                 printHolidayScheduleFormat(workDay, employees.getWeekendEmployeeNameBy());
