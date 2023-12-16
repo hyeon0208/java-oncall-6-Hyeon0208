@@ -7,6 +7,8 @@ import oncall.util.StringConvertor;
 public class Employees {
     private final List<String> weekday;
     private final List<String> weekend;
+    private int weekdayIndex;
+    private int weekendIndex;
 
     private Employees(List<String> weekday, List<String> weekend) {
         this.weekday = weekday;
@@ -25,11 +27,11 @@ public class Employees {
         return weekday.size();
     }
 
-    public String getWeekdayEmployeeNameBy(int index) {
-        return weekday.get(index);
+    public String getWeekdayEmployeeNameBy() {
+        return weekday.get(weekdayIndex++);
     }
 
-    public String getWeekendEmployeeNameBy(int index) {
-        return weekend.get(index);
+    public String getWeekendEmployeeNameBy() {
+        return weekend.get(weekendIndex++);
     }
 }
