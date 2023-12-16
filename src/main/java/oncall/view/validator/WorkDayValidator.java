@@ -19,6 +19,7 @@ public class WorkDayValidator {
         validateComma(input);
         String[] workDay = Separator.COMMA.split(input);
         validateBlank(workDay);
+        validateLength(workDay);
         String month = workDay[CommonValue.MONTH_INDEX];
         String dayOfWeek = workDay[CommonValue.DAY_OF_WEEK_INDEX];
         validateMonthFormat(month);
