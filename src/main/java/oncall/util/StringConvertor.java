@@ -1,5 +1,6 @@
 package oncall.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StringConvertor {
@@ -12,6 +13,6 @@ public class StringConvertor {
     }
 
     public static List<String> convertStringArrToStringList(String[] values) {
-        return List.of(values);
+        return new ArrayList<>(List.of(values));
     }
 }
