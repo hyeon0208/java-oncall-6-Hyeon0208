@@ -30,15 +30,19 @@ public class WorkDay {
 
     public static WorkDay from(String input) {
         String[] workDay = Separator.COMMA.split(input);
-        int month = Integer.parseInt(workDay[CommonValue.MONTH_INDEX]);
-        DayOfWeek startDay = getDayOfWeekEnumName(workDay[CommonValue.DAY_OF_WEEK_INDEX]);
-        LocalDate startDate = LocalDate.of(Year.now().getValue(), month, startDay.getValue())
-                .with(TemporalAdjusters.firstInMonth(startDay));
-        return new WorkDay(startDate);
+        return new WorkDay(createLocalDateFrom(workDay));
     }
 
     private static DayOfWeek getDayOfWeekEnumName(String dayOfWeek) {
         return KoreanDayOfWeekMapper.mapToDayOfWeekEnumName(dayOfWeek);
+    }
+
+    private static LocalDate createLocalDateFrom(String[] workDay) {
+        int year = Year.now().getValue();
+        int month = Integer.parseInt(workDay[CommonValue.MONTH_INDEX]);
+        DayOfWeek startDay = getDayOfWeekEnumName(workDay[CommonValue.DAY_OF_WEEK_INDEX]);
+        int day = startDay.getValue();
+        return LocalDate.of(year, month, day).with(TemporalAdjusters.firstInMonth(startDay));
     }
 
     public void nextDay() {
