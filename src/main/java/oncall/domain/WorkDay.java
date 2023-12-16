@@ -7,6 +7,7 @@ import java.time.Year;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import oncall.constant.CommonValue;
+import oncall.constant.KoreanDayOfWeekMapper;
 import oncall.util.Separator;
 
 public class WorkDay {
@@ -31,31 +32,13 @@ public class WorkDay {
         String[] workDay = Separator.COMMA.split(input);
         int month = Integer.parseInt(workDay[CommonValue.MONTH_INDEX]);
         DayOfWeek startDay = getDayOfWeekEnumName(workDay[CommonValue.DAY_OF_WEEK_INDEX]);
-        LocalDate startDate = LocalDate.of(Year.now().getValue(), month, 1)
+        LocalDate startDate = LocalDate.of(Year.now().getValue(), month, startDay.getValue())
                 .with(TemporalAdjusters.firstInMonth(startDay));
         return new WorkDay(startDate);
     }
 
     private static DayOfWeek getDayOfWeekEnumName(String dayOfWeek) {
-        if (dayOfWeek.equals("월")) {
-            return DayOfWeek.MONDAY;
-        }
-        if (dayOfWeek.equals("화")) {
-            return DayOfWeek.TUESDAY;
-        }
-        if (dayOfWeek.equals("수")) {
-            return DayOfWeek.WEDNESDAY;
-        }
-        if (dayOfWeek.equals("목")) {
-            return DayOfWeek.THURSDAY;
-        }
-        if (dayOfWeek.equals("금")) {
-            return DayOfWeek.FRIDAY;
-        }
-        if (dayOfWeek.equals("토")) {
-            return DayOfWeek.SATURDAY;
-        }
-        return DayOfWeek.SUNDAY;
+        return KoreanDayOfWeekMapper.mapToDayOfWeekEnumName(dayOfWeek);
     }
 
     public void nextDay() {
@@ -77,7 +60,7 @@ public class WorkDay {
         return date;
     }
 
-    public boolean isHoliday(LocalDate date) {
+    public boolean isHoliday() {
         return HOLIDAYS.contains(MonthDay.of(date.getMonth(), date.getDayOfMonth()));
     }
 
@@ -85,29 +68,11 @@ public class WorkDay {
         return date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY;
     }
 
-    public boolean isWeekDay(LocalDate date) {
-        return !isHoliday(date) && !isWeekend();
+    public boolean isWeekDay() {
+        return !isHoliday() && !isWeekend();
     }
 
     public String getDayOfWeekByKorean() {
-        if (date.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
-            return "월";
-        }
-        if (date.getDayOfWeek().equals(DayOfWeek.TUESDAY)) {
-            return "화";
-        }
-        if (date.getDayOfWeek().equals(DayOfWeek.WEDNESDAY)) {
-            return "수";
-        }
-        if (date.getDayOfWeek().equals(DayOfWeek.THURSDAY)) {
-            return "목";
-        }
-        if (date.getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
-            return "금";
-        }
-        if (date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
-            return "토";
-        }
-        return "일";
+        return KoreanDayOfWeekMapper.mapToKoreanDayOfWeekName(date.getDayOfWeek());
     }
 }
