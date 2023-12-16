@@ -1,9 +1,9 @@
 package oncall.controller;
 
-import java.time.LocalDate;
 import oncall.domain.WorkDay;
 import oncall.view.OutputView;
 import oncall.view.handler.InputHandler;
+import oncall.view.validator.WeekendEmployeeValidator;
 
 public class WorkController {
     private final InputHandler inputHandler;
@@ -15,25 +15,27 @@ public class WorkController {
     }
 
     public void start() {
+        WorkDay workDay = setUpWorkDay();
+
+        setUpEmployees();
+    }
+
+    private WorkDay setUpWorkDay() {
         outputView.printStartWorkDayInputMessage();
         String workDay = inputHandler.receiveValidatedStartWorkDay();
-        WorkDay from = WorkDay.from(workDay);
-        System.out.println(from.getDate());
-        for (int i = 0; i < 40; i++) {
-            from.nextDay();
-            LocalDate date = from.getDate();
-            System.out.println(date);
-            System.out.println("휴일 ? : " + from.isHoliday(date));
-            System.out.println("평일 ? : " + from.isWeekDay(date));
+        return WorkDay.from(workDay);
+    }
+
+    public void setUpEmployees() {
+        try {
+            outputView.printWeekDayWorkEmployeeNamesInputMessage();
+            String weekDayEmployeeNames = inputHandler.receiveValidatedWeekDayEmployeeNames();
+            outputView.printWeekendWorkEmployeeNamesInputMessage();
+            String weekendEmployeeNames = inputHandler.receiveValidatedWeekendEmployeeNames();
+            WeekendEmployeeValidator.validate(weekDayEmployeeNames, weekendEmployeeNames);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            setUpEmployees();
         }
-
-
-        outputView.printWeekDayWorkEmployeeNamesInputMessage();
-        String weekDayEmployeeNames = inputHandler.receiveValidatedWeekDayEmployeeNames();
-
-        outputView.printWeekendWorkEmployeeNamesInputMessage();
-        String weekendEmployeeNames = inputHandler.receiveValidatedWeekendEmployeeNames(weekDayEmployeeNames);
-
-
     }
 }
