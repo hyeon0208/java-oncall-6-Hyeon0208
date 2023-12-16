@@ -46,18 +46,31 @@ public class WorkDay {
     }
 
     public void nextDay() {
+        int year = date.getYear();
         int day = date.getDayOfMonth() + 1;
         int month = date.getMonthValue();
-        int year = date.getYear();
-        if ((month == 2 && day > 28) || (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
-                || day > 31) {
+        if (isNextMonth(month, day)) {
             day = 1;
-            month += 1;
-            if (month > 12) {
-                month = 1;
-            }
+            month = getNextMonth(month);
         }
         date = LocalDate.of(year, month, day);
+    }
+
+    private boolean isNextMonth(int month, int day) {
+        if (month == 2) {
+            return day > 28;
+        }
+        if (month == 4 || month == 6 || month == 9 || month == 11) {
+            return day > 30;
+        }
+        return day > 31;
+    }
+
+    private int getNextMonth(int month) {
+        if (month == 12) {
+            return 1;
+        }
+        return month + 1;
     }
 
     public LocalDate getDate() {
