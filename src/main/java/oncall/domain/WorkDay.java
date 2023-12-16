@@ -73,8 +73,16 @@ public class WorkDay {
         return month + 1;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public int getMonth() {
+        return date.getMonthValue();
+    }
+
+    public int getDay() {
+        return date.getDayOfMonth();
+    }
+
+    public String getDayOfWeekByKorean() {
+        return KoreanDayOfWeekMapper.mapToKoreanDayOfWeekName(date.getDayOfWeek());
     }
 
     public boolean isHoliday() {
@@ -87,9 +95,5 @@ public class WorkDay {
 
     public boolean isWeekDay() {
         return !isHoliday() && !isWeekend();
-    }
-
-    public String getDayOfWeekByKorean() {
-        return KoreanDayOfWeekMapper.mapToKoreanDayOfWeekName(date.getDayOfWeek());
     }
 }
