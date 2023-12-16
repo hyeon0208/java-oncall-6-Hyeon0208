@@ -19,7 +19,7 @@ public class WorkController {
     public void start() {
         WorkDay workDay = setUpWorkDay();
         Employees employees = setUpEmployees();
-        outputView.printWorkSchedule(workDay, employees);
+        showWorkSchedule(workDay, employees);
     }
 
     private WorkDay setUpWorkDay() {
@@ -40,5 +40,10 @@ public class WorkController {
             ErrorView.printErrorMessage(exception.getMessage());
             return setUpEmployees();
         }
+    }
+
+    public void showWorkSchedule(WorkDay workDay, Employees employees) {
+        outputView.printNewLine();
+        outputView.printWorkSchedule(workDay, employees);
     }
 }
