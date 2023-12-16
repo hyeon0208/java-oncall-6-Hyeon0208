@@ -34,7 +34,9 @@ public class Employees {
     public String getWeekdayEmployeeNameBy() {
         String currentEmployeeName = weekday.get(weekdayIndex);
         if (isWorkLast(currentEmployeeName)) {
-            currentEmployeeName = getNextEmployee();
+            int nextIndex = (weekdayIndex + 1) % weekday.size();
+            swapWeekdayEmployee(weekdayIndex, nextIndex);
+            currentEmployeeName = weekday.get(weekdayIndex);
         }
         lastEmployeeName = currentEmployeeName;
         weekdayIndex = (weekdayIndex + 1) % weekday.size();
@@ -44,7 +46,9 @@ public class Employees {
     public String getWeekendEmployeeNameBy() {
         String currentEmployeeName = weekend.get(weekendIndex);
         if (isWorkLast(currentEmployeeName)) {
-            currentEmployeeName = getNextEmployee();
+            int nextIndex = (weekendIndex + 1) % weekend.size();
+            swapWeekendEmployee(weekendIndex, nextIndex);
+            currentEmployeeName = weekend.get(weekendIndex);
         }
         lastEmployeeName = currentEmployeeName;
         weekendIndex = (weekendIndex + 1) % weekend.size();
@@ -53,12 +57,6 @@ public class Employees {
 
     private boolean isWorkLast(String currentEmployeeName) {
         return currentEmployeeName.equals(lastEmployeeName);
-    }
-
-    private String getNextEmployee() {
-        int nextIndex = (weekendIndex + 1) % weekend.size();
-        swapWeekendEmployee(weekendIndex, nextIndex);
-        return weekend.get(weekendIndex);
     }
 
     private void swapWeekdayEmployee(int index1, int index2) {
