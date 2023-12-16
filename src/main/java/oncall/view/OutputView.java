@@ -28,12 +28,12 @@ public class OutputView {
                         employees.getWeekendEmployeeNameBy(weekendIndex));
                 weekendIndex++;
             }
-            if (workDay.isWeekDay(date)) {
+            if (workDay.isWeekDay()) {
                 System.out.printf("%d월 %d일 %s %s\n", date.getMonthValue(), date.getDayOfMonth(), workDay.getDayOfWeekByKorean(),
                         employees.getWeekdayEmployeeNameBy(weekdayIndex));
                 weekdayIndex++;
             }
-            if (workDay.isHoliday(date)) {
+            if (workDay.isHoliday()) {
                 System.out.printf("%d월 %d일 %s (휴일) %s\n", date.getMonthValue(), date.getDayOfMonth(), workDay.getDayOfWeekByKorean(),
                         employees.getWeekendEmployeeNameBy(weekendIndex));
                 weekendIndex++;
@@ -41,7 +41,6 @@ public class OutputView {
             workDay.nextDay();
         }
     }
-
 
     public void printNewLine() {
         System.out.println();
