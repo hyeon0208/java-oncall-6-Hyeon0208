@@ -78,11 +78,36 @@ public class WorkDay {
     }
 
     public boolean isHoliday(LocalDate date) {
-        return HOLIDAYS.contains(MonthDay.of(date.getMonth(), date.getDayOfMonth()))
-                || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY;
+        return HOLIDAYS.contains(MonthDay.of(date.getMonth(), date.getDayOfMonth()));
+    }
+
+    public boolean isWeekend() {
+        return date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY;
     }
 
     public boolean isWeekDay(LocalDate date) {
-        return !isHoliday(date);
+        return !isHoliday(date) && !isWeekend();
+    }
+
+    public String getDayOfWeekByKorean() {
+        if (date.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+            return "월";
+        }
+        if (date.getDayOfWeek().equals(DayOfWeek.TUESDAY)) {
+            return "화";
+        }
+        if (date.getDayOfWeek().equals(DayOfWeek.WEDNESDAY)) {
+            return "수";
+        }
+        if (date.getDayOfWeek().equals(DayOfWeek.THURSDAY)) {
+            return "목";
+        }
+        if (date.getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
+            return "금";
+        }
+        if (date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+            return "토";
+        }
+        return "일";
     }
 }

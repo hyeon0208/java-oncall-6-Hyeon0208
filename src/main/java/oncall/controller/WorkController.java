@@ -1,6 +1,8 @@
 package oncall.controller;
 
+import oncall.domain.Employees;
 import oncall.domain.WorkDay;
+import oncall.view.ErrorView;
 import oncall.view.OutputView;
 import oncall.view.handler.InputHandler;
 import oncall.view.validator.WeekendEmployeeValidator;
@@ -16,8 +18,8 @@ public class WorkController {
 
     public void start() {
         WorkDay workDay = setUpWorkDay();
-
-        setUpEmployees();
+        Employees employees = setUpEmployees();
+        outputView.printWorkSchedule(workDay, employees);
     }
 
     private WorkDay setUpWorkDay() {
@@ -26,16 +28,17 @@ public class WorkController {
         return WorkDay.from(workDay);
     }
 
-    public void setUpEmployees() {
+    public Employees setUpEmployees() {
         try {
             outputView.printWeekDayWorkEmployeeNamesInputMessage();
             String weekDayEmployeeNames = inputHandler.receiveValidatedWeekDayEmployeeNames();
             outputView.printWeekendWorkEmployeeNamesInputMessage();
             String weekendEmployeeNames = inputHandler.receiveValidatedWeekendEmployeeNames();
             WeekendEmployeeValidator.validate(weekDayEmployeeNames, weekendEmployeeNames);
+            return Employees.of(weekDayEmployeeNames, weekendEmployeeNames);
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
-            setUpEmployees();
+            ErrorView.printErrorMessage(exception.getMessage());
+            return setUpEmployees();
         }
     }
 }
